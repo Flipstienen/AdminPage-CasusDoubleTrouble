@@ -2,8 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Bogus; // Make sure to have Bogus installed via NuGet
 
 namespace DataAccessLayer
 {
@@ -11,53 +10,70 @@ namespace DataAccessLayer
     {
         public static void Initialize(MatrixIncDbContext context)
         {
-            // Look for any customers.
             if (context.Customers.Any())
             {
-                return;   // DB has been seeded
+                return;
             }
+            
+            Randomizer.Seed = new Random(28052025);
 
-            // TODO: Hier moet ik nog wat namen verzinnen die betrekking hebben op de matrix.
-            // - Denk aan de m3 boutjes, moertjes en ringetjes.
-            // - Denk aan namen van schepen
-            // - Denk aan namen van vliegtuigen            
-            var customers = new Customer[]
-            {
-                new Customer { Name = "Neo", Address = "123 Elm St" , Active=true},
-                new Customer { Name = "Morpheus", Address = "456 Oak St", Active = true },
-                new Customer { Name = "Trinity", Address = "789 Pine St", Active = true }
-            };
+            #region Seeding Customers
+            var customerFaker = new Faker<Customer>()
+                .RuleFor(c => c.Name, f => f.Person.FullName)
+                .RuleFor(c => c.Address, f => f.Address.FullAddress())
+                .RuleFor(c => c.DateRegistered, f => f.Date.Past(2, DateTime.Today).Date); // Past 2 years, date only
+
+            var customers = customerFaker.Generate(10);
             context.Customers.AddRange(customers);
-
-            var orders = new Order[]
-            {
-                new Order { Customer = customers[0], OrderDate = DateTime.Parse("2021-01-01")},
-                new Order { Customer = customers[0], OrderDate = DateTime.Parse("2021-02-01")},
-                new Order { Customer = customers[1], OrderDate = DateTime.Parse("2021-02-01")},
-                new Order { Customer = customers[2], OrderDate = DateTime.Parse("2021-03-01")}
-            };  
-            context.Orders.AddRange(orders);
-
-            var products = new Product[]
-            {
-                new Product { Name = "Nebuchadnezzar", Description = "Het schip waarop Neo voor het eerst de echte wereld leert kennen", Price = 10000.00m },
-                new Product { Name = "Jack-in Chair", Description = "Stoel met een rugsteun en metalen armen waarin mensen zitten om ingeplugd te worden in de Matrix via een kabel in de nekpoort", Price = 500.50m },
-                new Product { Name = "EMP (Electro-Magnetic Pulse) Device", Description = "Wapentuig op de schepen van Zion", Price = 129.99m }
-            };
-            context.Products.AddRange(products);
-
-            var parts = new Part[]
-            {
-                new Part { Name = "Tandwiel", Description = "Overdracht van rotatie in bijvoorbeeld de motor of luikmechanismen"},
-                new Part { Name = "M5 Boutje", Description = "Bevestiging van panelen, buizen of interne modules"},
-                new Part { Name = "Hydraulische cilinder", Description = "Openen/sluiten van zware luchtsluizen of bewegende onderdelen"},
-                new Part { Name = "Koelvloeistofpomp", Description = "Koeling van de motor of elektronische systemen."}
-            };
-            context.Parts.AddRange(parts);
-
             context.SaveChanges();
+            #endregion
 
+            #region Seeding Parts
+            var partFaker = new Faker<Part>()
+                .RuleFor(p => p.Name, f => f.Commerce.ProductAdjective() + " " + f.Commerce.Product()) 
+                .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
+                .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price(1, 1000, 2))) 
+                .RuleFor(p => p.ImageUrl, f => f.Image.PicsumUrl(400, 300));
+
+            var parts = partFaker.Generate(50);
+            context.Parts.AddRange(parts);
+            context.SaveChanges();
+            #endregion
+            
+            #region Seeding orders
+            var orderFaker = new Faker<Order>()
+                .RuleFor(o => o.CustomerId, f => f.PickRandom(customers).Id) // Assign existing Customer's ID
+                .RuleFor(o => o.OrderDate, (f, o) =>
+                {
+                    var associatedCustomer = customers.First(c => c.Id == o.CustomerId);
+                    return f.Date.Between(associatedCustomer.DateRegistered, DateTime.Today);
+                });
+
+            var orders = orderFaker.Generate(50);
+            context.Orders.AddRange(orders);
+            context.SaveChanges();
+            #endregion
+
+            #region Seeding order parts (many-to-many relationship)
+            Random rand = new Random(28052025);
+            foreach (var order in orders)
+            {
+                int numberOfPartsForOrder = rand.Next(1, 6);
+                int partsToTake = Math.Min(numberOfPartsForOrder, parts.Count);
+                var selectedParts = parts.OrderBy(p => rand.Next()) // Randomize parts list
+                                         .Take(partsToTake) // Take the desired number
+                                         .ToList();
+
+                foreach (var part in selectedParts)
+                {
+                    order.Parts.Add(part);
+                }
+            }
+            context.SaveChanges();
+            #endregion
+            
             context.Database.EnsureCreated();
+            
         }
     }
 }
