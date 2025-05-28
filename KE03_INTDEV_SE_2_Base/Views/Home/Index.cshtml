@@ -23,7 +23,7 @@ ViewData["Title"] = "Dashboard";
     const customerMonths = @Html.Raw(JsonConvert.SerializeObject(ViewData["CustomerMonths"]));
     const customerCounts = @Html.Raw(JsonConvert.SerializeObject(ViewData["RegisteredCustomersCount"]));
     const customerTitle = @Html.Raw(JsonConvert.SerializeObject(ViewData["CustomerChartTitle"] as string));
-
+    const maxYCustomers = @ViewData["MaxCustomers"];
     const ctxCustomer = document.getElementById('userRegistrationLineChart').getContext('2d');
 
     new Chart(ctxCustomer, {
@@ -52,6 +52,7 @@ ViewData["Title"] = "Dashboard";
             scales: {
                 y: {
                     beginAtZero: true,
+                    max: maxYCustomers
                 },
                 x: {
                     title: { display: true }
@@ -64,7 +65,7 @@ ViewData["Title"] = "Dashboard";
     const orderMonths = @Html.Raw(JsonConvert.SerializeObject(ViewData["OrderMonths"]));
     const orderCounts = @Html.Raw(JsonConvert.SerializeObject(ViewData["OrderCounts"]));
     const orderTitle = @Html.Raw(JsonConvert.SerializeObject(ViewData["OrderChartTitle"] as string));
-
+    const maxYOrders = @ViewData["MaxOrders"]
     const ctxOrder = document.getElementById('orderLineChart').getContext('2d');
 
     new Chart(ctxOrder, {
@@ -93,6 +94,7 @@ ViewData["Title"] = "Dashboard";
             scales: {
                 y: {
                     beginAtZero: true,
+                    max: maxYOrders,
                 },
                 x: {
                     title: { display: true }

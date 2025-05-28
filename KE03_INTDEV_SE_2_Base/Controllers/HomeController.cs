@@ -80,6 +80,13 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         {
             var (customerMonths, registeredCustomersCount) = GetMonthlyRegistrationData();
             var (orderMonths, orderCounts) = GetMonthlyOrderData();
+            ViewData["MaxCustomers"] = registeredCustomersCount.Any()
+            ? registeredCustomersCount.Max() + 2
+            : "No maximum possible";
+
+            ViewData["MaxOrders"] = orderCounts.Any()
+            ? orderCounts.Max() + 2
+            : "No maximum possible";
 
             ViewData["CustomerChartTitle"] = customerMonths.Any()
                 ? "Users"
