@@ -1,28 +1,104 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@using Newtonsoft.Json
+
+@{
+ViewData["Title"] = "Dashboard";
 }
 
-<div class="alert-info">
-    <p class="p-1">
-        Dit project kun je gebruiken als startpunt voor de groeps inleveropdracht: <a href="https://moodle.zuyd.nl/mod/resource/view.php?id=1262065">KE03_INTDEV_SE_2</a>
-
-        <ul>
-            <li>Wat ga je maken: Je realiseert samen met je casus groep een webapplicatie, een “admin-achtige” webapplicatie waarbij je gebruik maakt van ASP.NET Core MVC architecture pattern. De belangrijkste hoofdprestatie en functionele eisen van deze applicatie zijn als volgt: Het back-office team van Matrix Inc. kan de producten en bijbehorende data en details beheren in deze webapplicatie, zodat de interne en externe klanten altijd over de juiste informatie beschikken.</li>
-            
-            <li>
-                Hoe ga je dit maken?<br />
-                - Groepsopdracht.<br />
-                - Pas de principes van HCI toe (bijv. Paper prototyping, design principles etc…)<br />
-                - Jullie web applicatie maakt gebruik van het MVC architectural pattern.<br />                
-                - Je werkt met je casusgroep op 1 github repository. Tip: je kunt met branches en pull requests werken<br />
-                - Jullie applicatie maakt gebruik van responsive design, meerdere html elementen en toegepast css styles.<br />
-                - Jullie applicatie maakt gebruik van de aangeleverde data access layer voor een snelle start. Deze mag je zelf uitbreiden of aanpassen indien gewenst.<br />
-            </li>
-            <li>
-                Je krijgt een dal (data access layer) meegeleverd. Qua inhoud is die niet perfect gevuld, maar qua structuur biedt die voldoende om een mooi bestel systeem te kunnen maken. <br />
-                In het voorbeeld wordt nog geen gebruik gemaakt van de repository classes, maar direct van de db context. Het is aan jezelf om aan te passen en te kiezen hoe je dit kunt wil toepassen en/of oplossen.<br />
-                Maar mis je iets, je bent vrij om alles naar wens aan te passen! Ben creatief!
-            </li>
-        </ul>
-    </p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <canvas id="userRegistrationLineChart" style="width:100%; height:400px;"></canvas>
+        </div>
+        <div class="col-md-6">
+            <canvas id="orderLineChart" style="width:100%; height:400px;"></canvas>
+        </div>
+    </div>
 </div>
+
+
+
+@section Scripts {
+<script>
+    // Customers
+    const customerMonths = @Html.Raw(JsonConvert.SerializeObject(ViewData["CustomerMonths"]));
+    const customerCounts = @Html.Raw(JsonConvert.SerializeObject(ViewData["RegisteredCustomersCount"]));
+    const customerTitle = @Html.Raw(JsonConvert.SerializeObject(ViewData["CustomerChartTitle"] as string));
+
+    const ctxCustomer = document.getElementById('userRegistrationLineChart').getContext('2d');
+
+    new Chart(ctxCustomer, {
+        type: 'line',
+        data: {
+            labels: customerMonths,
+            datasets: [{
+                label: 'User Registrations',
+                data: customerCounts,
+                backgroundColor: 'rgba(54, 162, 235, 0.4)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: customerTitle,
+                    font: { size: 18 }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+                x: {
+                    title: { display: true }
+                }
+            }
+        }
+    });
+
+    // Orders
+    const orderMonths = @Html.Raw(JsonConvert.SerializeObject(ViewData["OrderMonths"]));
+    const orderCounts = @Html.Raw(JsonConvert.SerializeObject(ViewData["OrderCounts"]));
+    const orderTitle = @Html.Raw(JsonConvert.SerializeObject(ViewData["OrderChartTitle"] as string));
+
+    const ctxOrder = document.getElementById('orderLineChart').getContext('2d');
+
+    new Chart(ctxOrder, {
+        type: 'line',
+        data: {
+            labels: orderMonths,
+            datasets: [{
+                label: 'Orders',
+                data: orderCounts,
+                backgroundColor: 'rgba(255, 99, 132, 0.4)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                title: {
+                    display: true,
+                    text: orderTitle,
+                    font: { size: 18 }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                },
+                x: {
+                    title: { display: true }
+                }
+            }
+        }
+    });
+</script>
+}
