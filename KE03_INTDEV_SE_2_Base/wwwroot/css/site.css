@@ -18,5 +18,54 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    display: flex;
+    min-height: 100vh;
+    margin: 0;
+}
+
+#sidebar {
+    width: 250px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+    #sidebar.collapsed {
+        width: 50px;
+        padding: 0 !important;
+        overflow: hidden;
+    }
+
+#main {
+    flex-grow: 1;
+    padding: 20px;
+    transition: margin-left 0.3s ease;
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        position: absolute;
+        z-index: 999;
+        height: 100vh;
+    }
+}
+
+a{
+    text-decoration: none
+}
+.nav-link {
+    color: white;
+    background-color: gray;
+    text-align: center
+    
+}
+
+#closed {
+    color: gray;
+    border-color: gray;
+    height: 35px;
+    display: none;
+}
+
+.navigation{
+    display: block
 }

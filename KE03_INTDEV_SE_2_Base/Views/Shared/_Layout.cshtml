@@ -8,41 +8,49 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/KE03_INTDEV_SE_2_Base.styles.css" asp-append-version="true" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.9/dist/chart.umd.min.js"></script>
+
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">KE03_INTDEV_SE_2_Base</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <nav id="sidebar" class="bg-light border-end">
+        <button class="btn btn-outline-primary" id="opened" style="color: gray; border-color: gray" onclick="toggleSidebar()">☰</button>
+        <div class="p-3">
+            <ul class="nav flex-column">
+                <li class="nav-item mb-2">
+                    <a class="d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
+                        <img src="~/Images/Speed.svg" alt="dashboard" />
+                        <h5 class="nav-link flex-fill navigation">Dashboard</h5>
+                    </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="d-flex" asp-area="" asp-controller="Customers" asp-action="Index">
+                        <img src="~/Images/Group.svg" alt="customers" />
+                        <h5 class="nav-link navigation flex-fill">Customers</h5>
+                </a>
+                </li>
+                <li class="nav-item mb-2">
+                    <a class="d-flex align-items-center" asp-area="" asp-controller="Products" asp-action="Index">
+                        <img src="~/Images/package_search.svg" alt="products" />
+                        <h5 class="nav-link flex-fill navigation">Products</h5>
+                    </a>
+                </li>
+                @* <li class="nav-item mb-2"> *@
+                @*     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
+                @* </li> *@
+            </ul>
+        </div>
+    </nav>
+    
+    @* <button class="btn btn-outline-primary" id="closed" onclick="toggleSidebar()">☰</button> *@
+
+    <div id="main">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
-
+</body>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
-</body>
 </html>
+
