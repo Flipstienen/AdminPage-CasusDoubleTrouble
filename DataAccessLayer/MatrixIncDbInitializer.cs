@@ -44,17 +44,23 @@ namespace DataAccessLayer
             #endregion
 
             #region Seeding Orders
+
+            var deliveryOptions = new[] { "Standard", "Express", "Next-Day", "Pickup" };
+
             var orderFaker = new Faker<Order>()
                 .RuleFor(o => o.CustomerId, f => f.PickRandom(customers).Id)
                 .RuleFor(o => o.OrderDate, (f, o) =>
                 {
                     var associatedCustomer = customers.First(c => c.Id == o.CustomerId);
                     return f.Date.Between(associatedCustomer.DateRegistered, DateTime.Today);
-                });
+                })
+                .RuleFor(o => o.DeliveryOption, f => f.PickRandom(deliveryOptions))
+                .RuleFor(o => o.Delivered, f => f.Random.Bool());
 
             var orders = orderFaker.Generate(50);
             context.Orders.AddRange(orders);
             context.SaveChanges();
+
             #endregion
 
             #region Seeding OrderParts (Many-to-Many)
