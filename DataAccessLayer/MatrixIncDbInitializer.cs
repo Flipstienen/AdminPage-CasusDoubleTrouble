@@ -35,8 +35,10 @@ namespace DataAccessLayer
             var partFaker = new Faker<Part>()
                 .RuleFor(p => p.Name, f => f.Commerce.ProductAdjective() + " " + f.Commerce.Product())
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
-                .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price(1, 1000, 2)))
-                .RuleFor(p => p.ImageUrl, f => f.Image.PicsumUrl(400, 300));
+                .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price(3, 1000, 2))) // Minimum price is 3
+                .RuleFor(p => p.BuyInPrice, (f, p) => Math.Round(p.Price - 2, 2))
+                .RuleFor(p => p.ImageUrl, f => f.Image.PicsumUrl(400, 300))
+                .RuleFor(p => p.Stock, f => f.Random.Int(0, 100));
 
             var parts = partFaker.Generate(50);
             context.Parts.AddRange(parts);
@@ -44,7 +46,6 @@ namespace DataAccessLayer
             #endregion
 
             #region Seeding Orders
-
             var deliveryOptions = new[] { "Standard", "Express", "Next-Day", "Pickup" };
 
             var orderFaker = new Faker<Order>()
@@ -60,7 +61,6 @@ namespace DataAccessLayer
             var orders = orderFaker.Generate(50);
             context.Orders.AddRange(orders);
             context.SaveChanges();
-
             #endregion
 
             #region Seeding OrderParts (Many-to-Many)
