@@ -22,8 +22,10 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // GET: Orders
         public async Task<IActionResult> Index()
         {
-            var matrixIncDbContext = _context.Orders.Include(o => o.Customer)
-                .Include(o => o.Parts);
+            var matrixIncDbContext = _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderParts)
+                .ThenInclude(op => op.Part); // <-- Include actual part data
             return View(await matrixIncDbContext.ToListAsync());
         }
 
@@ -37,8 +39,10 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
 
             var order = await _context.Orders
                 .Include(o => o.Customer)
-                .Include(o => o.Parts)
+                .Include(o => o.OrderParts)
+                .ThenInclude(op => op.Part)
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (order == null)
             {
                 return NotFound();

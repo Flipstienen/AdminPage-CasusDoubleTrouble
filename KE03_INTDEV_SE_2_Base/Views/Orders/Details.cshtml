@@ -1,4 +1,4 @@
-﻿@model DataAccessLayer.Models.Order
+﻿@model DataAccessLayer.Models.OrderPart
 
 @{
     ViewData["Title"] = "Details";
@@ -11,24 +11,24 @@
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.OrderDate)
+            @Html.DisplayNameFor(model => model.Order.Customer.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.OrderDate)
+            @Html.DisplayFor(model => model.Order.Customer.Name)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Customer)
+            @Html.DisplayNameFor(model => model.Order.Customer.Name)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Customer.Address)
+            @Html.DisplayFor(model => model.Order.Customer.Name)
         </dd>
 		<dt class="col-sm-2">
 			Products
 		</dt>
         <dd class="col-sm-10">
-			@foreach (var part in Model.Parts)
+			@foreach (var op in Model.Order.OrderParts)
 			{
-                @part.Name
+                @op.Part.Name
 				<br />
 			}
         </dd>

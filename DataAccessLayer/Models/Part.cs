@@ -19,6 +19,6 @@ namespace DataAccessLayer.Models
         public int Stock { get; set; }
         public decimal BuyInPrice { get; set; }
         
-        public ICollection<Order> Orders { get; } = new List<Order>();
+        public ICollection<OrderPart> OrderParts { get; set; } = new List<OrderPart>();
     }
 }

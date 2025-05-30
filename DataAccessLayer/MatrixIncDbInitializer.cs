@@ -63,8 +63,11 @@ namespace DataAccessLayer
             context.SaveChanges();
             #endregion
 
-            #region Seeding OrderParts (Many-to-Many)
-            Random rand = new Random(28052025);
+            #region Seeding OrderParts (Many-to-Many with Quantity)
+            Random rand = new Random(28052025); // Make sure this line is above the loop
+
+            var orderParts = new List<OrderPart>();
+
             foreach (var order in orders)
             {
                 int numberOfPartsForOrder = rand.Next(1, 6);
@@ -73,11 +76,21 @@ namespace DataAccessLayer
 
                 foreach (var part in selectedParts)
                 {
-                    order.Parts.Add(part);
+                    var quantity = rand.Next(1, 10); // Quantity between 1 and 9
+
+                    orderParts.Add(new OrderPart
+                    {
+                        Order = order,
+                        Part = part,
+                        Quantity = quantity
+                    });
                 }
             }
+
+            context.OrderParts.AddRange(orderParts);
             context.SaveChanges();
             #endregion
+
 
             context.Database.EnsureCreated();
         }

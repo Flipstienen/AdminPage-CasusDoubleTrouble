@@ -19,6 +19,6 @@ namespace DataAccessLayer.Models
         public string DeliveryOption { get; set; }
         public bool Delivered { get; set; }
 
-        public ICollection<Part> Parts { get; } = new List<Part>();
+        public ICollection<OrderPart> OrderParts { get; set; } = new List<OrderPart>();
     }
 }

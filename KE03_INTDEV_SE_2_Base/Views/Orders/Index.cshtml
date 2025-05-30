@@ -33,9 +33,9 @@
                 @Html.DisplayFor(modelItem => item.Customer.Address)
             </td>
 				<td>
-					@foreach (var part in item.Parts)
+					@foreach (var x in item.OrderParts)
 					{
-						<span>@part.Name</span>
+						<span>@x.Order</span>
 
 						<br />
 					}
