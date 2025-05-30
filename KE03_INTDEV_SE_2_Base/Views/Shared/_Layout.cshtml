@@ -11,54 +11,66 @@
 
 </head>
 <body>
-    <nav id="sidebar" class="bg-light border-end">
-        <button class="btn btn-outline-primary" id="opened" style="color: gray; border-color: gray" onclick="toggleSidebar()">☰</button>
-        <div class="p-3">
-            <ul class="nav flex-column">
-                <li class="nav-item mb-2">
-                    <a class="d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
-                        <img src="~/Images/Speed.svg" alt="dashboard" />
-                        <h5 class="nav-link flex-fill navigation">Dashboard</h5>
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="d-flex" asp-area="" asp-controller="Customers" asp-action="Index">
-                        <img src="~/Images/Group.svg" alt="customers" />
-                        <h5 class="nav-link navigation flex-fill">Customers</h5>
-                </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="d-flex align-items-center" asp-area="" asp-controller="Products" asp-action="Index">
-                        <img src="~/Images/package_search.svg" alt="products" />
-                        <h5 class="nav-link flex-fill navigation">Products</h5>
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="d-flex align-items-center" asp-area="" asp-controller="Orders" asp-action="Index">
-                        <img src="~/Images/package.svg" alt="Orders" />
-                        <h5 class="nav-link flex-fill navigation">Orders</h5>
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="d-flex align-items-center" asp-area="" asp-controller="Stocks" asp-action="Index">
-                        <img src="~/Images/package_car.svg" alt="Stocks" />
-                        <h5 class="nav-link flex-fill navigation">Stock</h5>
-                    </a>
-                </li>
-                <li class="nav-item mb-2">
-                    <a class="d-flex align-items-center" asp-area="" asp-controller="Statistics" asp-action="Index">
-                        <img src="~/Images/Chart_alt.svg" alt="Statistics" />
-                        <h5 class="nav-link flex-fill navigation">Statistics</h5>
-                    </a>
-                </li>
-                @* <li class="nav-item mb-2"> *@
-                @*     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a> *@
-                @* </li> *@
-            </ul>
+<nav id="sidebar" class="bg-light border-end vh-100 d-flex flex-column p-3" style="width: 250px; position: relative;">
+    <div class="text-center mb-4">
+        <div id="ProfileSection" class="text-center mb-4 mt-5">
+            <img src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg" alt="User profile" class="rounded-circle mb-2" width="100" height="100">
+            <h6 class="mb-0" style="color: black;">Hi Kevin.</h6>
         </div>
-    </nav>
-    
-    @* <button class="btn btn-outline-primary" id="closed" onclick="toggleSidebar()">☰</button> *@
+<hr/>
+    </div>
+
+    <!-- Hamburger button: 3 black bars, no border/background, outside sidebar -->
+    <button id="toggleBtn"
+            class="btn p-0 position-absolute top-10 end-0 translate-middle-y"
+            style="right: -20px; width: 30px; height: 30px; background: transparent; border: none;"
+            aria-label="Toggle sidebar"
+            onclick="toggleSidebar()">
+        <span style="display:block; width: 22px; height: 2px; background-color: black; margin: 4px 0;"></span>
+        <span style="display:block; width: 22px; height: 2px; background-color: black; margin: 4px 0;"></span>
+        <span style="display:block; width: 22px; height: 2px; background-color: black; margin: 4px 0;"></span>
+    </button>
+
+    <ul class="nav nav-pills flex-column mt-1">
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index" style="color: black;">
+                <img src="~/Images/Speed.svg" alt="dashboard" class="me-2" width="20" style="filter: none;">
+                <h5 class="mb-0 navigation">Dashboard</h5>
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Customers" asp-action="Index" style="color: black;">
+                <img src="~/Images/Group.svg" alt="customers" class="me-2" width="20" style="filter: none;">
+                <h5 class="mb-0 navigation">Customers</h5>
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Products" asp-action="Index" style="color: black;">
+                <img src="~/Images/package_search.svg" alt="products" class="me-2" width="20" style="filter: none;">
+                <h5 class="mb-0 navigation">Products</h5>
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Orders" asp-action="Index" style="color: black;">
+                <img src="~/Images/package.svg" alt="orders" class="me-2" width="20" style="filter: none;">
+                <h5 class="mb-0 navigation">Orders</h5>
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Stocks" asp-action="Index" style="color: black;">
+                <img src="~/Images/package_car.svg" alt="stocks" class="me-2" width="20" style="filter: none;">
+                <h5 class="mb-0 navigation">Stock</h5>
+            </a>
+        </li>
+        <li class="nav-item mb-2">
+            <a class="nav-link d-flex align-items-center" asp-area="" asp-controller="Statistics" asp-action="Index" style="color: black;">
+                <img src="~/Images/Chart_alt.svg" alt="statistics" class="me-2" width="20" style="filter: none;">
+                <h5 class="mb-0 navigation">Statistics</h5>
+            </a>
+        </li>
+    </ul>
+</nav>
+
 
     <div id="main">
         <main role="main">
