@@ -69,3 +69,11 @@ a{
 .navigation{
     display: block
 }
+
+#sidebar {
+    transition: width 0.3s ease;
+}
+
+#sidebar img {
+    transition: width 0.3s ease;
+}
