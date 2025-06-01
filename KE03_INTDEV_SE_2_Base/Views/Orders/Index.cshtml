@@ -19,26 +19,60 @@
                 @Html.DisplayNameFor(model => model.Customer)
             </th>
             <th>
-				Products
+                Products
+            </th>
+            <th> 
+                Quantity
+            </th>
+            <th>
+                OrderPrice
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DeliveryOption)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Delivered)
             </th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.OrderDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Customer.Address)
-            </td>
-				<td>
-					@foreach (var x in item.OrderParts)
-					{
-						<span>@x.Order</span>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.OrderDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Customer.Address)
+                </td>
+                <td>
+                    @foreach (var product in item.OrderParts)
+                    {
+                        <span>@product.Part.Name</span>
 
+                        <br />
+                    }
+                </td>
+                <td>
+                    @foreach (var product in item.OrderParts)
+                    {
+                        <span>@product.Quantity</span>
+                        <br />
+                    }
+                </td>
+                <td>
+                    @foreach(var product in item.OrderParts){
+                    @((product.Quantity * product.Part.Price).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))
 						<br />
-					}
+                    }
+                    total:
+					@((item.OrderParts.Sum(p => p.Quantity * p.Part.Price)).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))
+                </td>
+				<td>
+					@Html.DisplayFor(modelItem => item.DeliveryOption)
+				</td>
+                <td>
+					@Html.DisplayFor(modelItem => item.Delivered)
+                </td>
             <td>
                     <a class="nav-link" style="width: 75px" asp-action="Details" asp-route-id="@item.Id">Details</a>
             </td>

@@ -26,6 +26,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                 .Include(o => o.Customer)
                 .Include(o => o.OrderParts)
                 .ThenInclude(op => op.Part); // <-- Include actual part data
+
             return View(await matrixIncDbContext.ToListAsync());
         }
 
