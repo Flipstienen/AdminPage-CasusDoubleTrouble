@@ -1,0 +1,29 @@
+﻿@model DataAccessLayer.Models.Part
+@{
+    ViewData["Title"] = "Bestel voorraad";
+}
+
+<div class="container mt-5">
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body">
+            <h3 class="mb-4">Voorraad aanvullen – @Model.Name</h3>
+
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="mb-3">
+                    <label class="form-label">Huidige voorraad</label>
+                    <input type="text" class="form-control" value="@Model.Stock stuks" disabled />
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Stock" class="form-label">Aantal [bij]bestellen</label>
+                    <input type="number" class="form-control" name="amountToAdd" min="1" required />
+                </div>
+
+                <button type="submit" class="btn btn-dark">Bestel</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Annuleren</a>
+            </form>
+        </div>
+    </div>
+</div>
