@@ -20,7 +20,7 @@
                         <dd class="col-sm-8">@Html.DisplayFor(model => model.Description)</dd>
 
                         <dt class="col-sm-4">Price</dt>
-                        <dd class="col-sm-8">$@Html.DisplayFor(model => model.Price)</dd>
+                        <dd class="col-sm-8">@Model.Price.ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-")</dd>
 
                         <dt class="col-sm-4">Image</dt>
                         <dd class="col-sm-8">

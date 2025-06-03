@@ -20,12 +20,21 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         }
 
         // GET: Orders
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
             var matrixIncDbContext = _context.Orders
                 .Include(o => o.Customer)
                 .Include(o => o.OrderParts)
-                .ThenInclude(op => op.Part); // <-- Include actual part data
+                .ThenInclude(op => op.Part);
+            if (id == 1)
+            {
+                var matrixIncDbContextOrder = _context.Orders
+                .Include(o => o.Customer)
+                .Include(o => o.OrderParts)
+                .ThenInclude(op => op.Part).OrderByDescending(o => o.OrderDate); // <-- Include actual part data
+                return View(await matrixIncDbContextOrder.ToListAsync());
+            }
+            
 
             return View(await matrixIncDbContext.ToListAsync());
         }
