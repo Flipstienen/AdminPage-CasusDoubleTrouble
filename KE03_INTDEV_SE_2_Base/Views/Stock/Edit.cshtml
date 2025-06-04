@@ -1,29 +1,68 @@
 ﻿@model DataAccessLayer.Models.Part
 @{
-    ViewData["Title"] = "Bestel voorraad";
+    ViewData["Title"] = "Order Stock";
 }
 
 <div class="container mt-5">
     <div class="card border-0 shadow-sm rounded-4">
         <div class="card-body">
-            <h3 class="mb-4">Voorraad aanvullen – @Model.Name</h3>
+            <h3 class="mb-4">Order Stock – @Model.Name</h3>
 
-            <form asp-action="Edit">
+            <form asp-action="Edit" data-buyinprice="@Model.BuyInPrice">
                 <input type="hidden" asp-for="Id" />
 
                 <div class="mb-3">
-                    <label class="form-label">Huidige voorraad</label>
-                    <input type="text" class="form-control" value="@Model.Stock stuks" disabled />
+                    <label class="form-label">Current Stock</label>
+                    <input type="text" class="form-control" value="@Model.Stock Pieces" disabled />
                 </div>
 
                 <div class="mb-3">
-                    <label asp-for="Stock" class="form-label">Aantal [bij]bestellen</label>
-                    <input type="number" class="form-control" name="amountToAdd" min="1" required />
+                    <label asp-for="Stock" class="form-label">Amount to order [additionally]</label>
+                    <input type="number" class="form-control" name="amountToAdd" id="amountToAdd" min="1" required />
                 </div>
 
-                <button type="submit" class="btn btn-dark">Bestel</button>
-                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Annuleren</a>
+                <div class="mb-3">
+                    <label class="form-label">Total Price</label>
+                    <input type="text" id="totalPriceDisplay" class="form-control" disabled />
+                </div>
+
+                <button type="submit" class="btn btn-dark" id="submitBtn">Order</button>
+                <a asp-action="Index" class="btn btn-outline-secondary ms-2">Cancel</a>
             </form>
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        const form = document.querySelector("form");
+        const amountInput = document.getElementById("amountToAdd");
+        const totalPriceDisplay = document.getElementById("totalPriceDisplay");
+        const submitBtn = document.getElementById("submitBtn");
+
+        const buyInPrice = parseFloat(form.dataset.buyinprice.replace(',', '.'));
+        const formatter = new Intl.NumberFormat('nl-NL', {
+            style: 'currency',
+            currency: 'EUR'
+        });
+
+        function updateTotalPrice() {
+            const amount = parseInt(amountInput.value) || 0;
+            const total = amount * buyInPrice;
+            totalPriceDisplay.value = formatter.format(total);
+        }
+
+        amountInput.addEventListener("input", updateTotalPrice);
+        document.addEventListener("DOMContentLoaded", updateTotalPrice);
+
+        form.addEventListener("submit", function (e) {
+            const amount = parseInt(amountInput.value) || 0;
+            if (amount > 50) {
+                const confirmed = confirm(`You're about to order ${amount} of this product.\nAre you certain you're not accidently a cat walking over the keyboard?`);
+                if (!confirmed) {
+                    e.preventDefault();
+                }
+            }
+        });
+    </script>
+}

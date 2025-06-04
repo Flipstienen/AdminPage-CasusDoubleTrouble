@@ -29,30 +29,30 @@
 </head>
 <body>
     <div class="container-fluid px-4 mt-4">
-        <h2 class="mb-4">Voorraadbeheer</h2> @* hier kan evt nog een icon als je dat wilt, ik heb hem voor nu ff weggehaalt *@
+        <h2 class="mb-4">Stockmanagement</h2> @* hier kan evt nog een icon als je dat wilt, ik heb hem voor nu ff weggehaalt *@
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach (var part in Model)
             {
                 <div class="col">
                     <div class="card shadow-sm h-100 border-0 rounded-4" style="background-color: #fff;">
-                        <img src="@part.ImageUrl" class="card-img-top rounded-top-4" alt="foto van [een] @part.Name" style="height: 200px; object-fit: cover;">
+                        <img src="@part.ImageUrl" class="card-img-top rounded-top-4" alt="photo of [a] @part.Name" style="height: 200px; object-fit: cover;">
                         <div class="card-body">
                             <h5 class="card-title">@part.Name</h5>
                             <p class="card-text text-muted small">@part.Description</p>
                             <p class="mb-1">
-                                <strong>Prijs:</strong>
+                                <strong>Price:</strong>
                                 @part.Price.ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-")
                             </p>
                             <p class="mb-0">
-                                <strong>Voorraad:</strong>
+                                <strong>Stock:</strong>
                                 <span class="badge @((part.Stock == 0) ? "bg-danger" : (part.Stock < 10) ? "bg-warning text-dark" : "bg-success")"> @* met de margins van de kleur verandering kan nog worden gespeeld *@
                                     @part.Stock stuks
                                 </span>
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-0 d-flex justify-content-between">
-                            <a class="btn btn-outline-dark btn-sm" asp-action="Edit" asp-route-id="@part.Id">Bestellen</a>
+                            <a class="btn btn-outline-dark btn-sm" asp-action="Edit" asp-route-id="@part.Id">Order</a>
                             <a class="btn btn-outline-secondary btn-sm" asp-action="Details" asp-route-id="@part.Id">🔍 Details</a>
                         </div>
                     </div>
