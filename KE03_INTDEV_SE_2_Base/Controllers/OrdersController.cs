@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using DataAccessLayer.Models;
+using KE03_INTDEV_SE_2_Base.Models;
+using SQLitePCL;
 
 namespace KE03_INTDEV_SE_2_Base.Controllers
 {
@@ -64,8 +66,17 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // GET: Orders/Create
         public IActionResult Create()
         {
+            var model = new OrderCreateViewModel
+            {
+                OrderParts = new List<OrderPartViewModel>
+        {
+            new OrderPartViewModel() // Initialize with one entry
+        }
+            };
             ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address");
-            return View();
+            ViewData["DeliveryOption"] = new SelectList(new List<string> { "Standard", "Express", "Pickup", "Next-Day" });
+            ViewData["partId"] = new SelectList(_context.Parts, "Id", "Name");
+            return View(model);
         }
 
         // POST: Orders/Create
@@ -73,16 +84,65 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,OrderDate,CustomerId")] Order order)
+        public async Task<IActionResult> Create(OrderCreateViewModel model)
         {
             if (ModelState.IsValid)
             {
+                bool hasStockError = false;
+                ModelState.Clear();
+                var order = new Order
+                {
+                    OrderDate = DateTime.Now,
+                    CustomerId = model.CustomerId,
+                    DeliveryOption = model.DeliveryOption,
+                    Delivered = model.Delivered,
+                    OrderParts = model.OrderParts.Select(op => new OrderPart
+                    {
+                        PartId = op.ProductId,
+                        Quantity = op.Quantity
+                    }).ToList()
+                };
+                foreach (var orderPart in order.OrderParts)
+                {
+                    var part = await _context.Parts.FindAsync(orderPart.PartId);
+                    if (part == null)
+                    {
+                        ModelState.AddModelError("", $"Part with ID {orderPart.PartId} not found.");
+                        hasStockError = true;
+                    }
+                    else if (orderPart.Quantity <= 0)
+                    {
+                        ModelState.AddModelError("", $"Part '{part.Name}' must have a quantity greater than 0.");
+                        hasStockError = true;
+                    }
+                    else if (part.Stock < orderPart.Quantity)
+                    {
+                        ModelState.AddModelError("", $"Not enough stock for part '{part.Name}'. Available: {part.Stock}, requested: {orderPart.Quantity}.");
+                        hasStockError = true;
+                    }
+                    else
+                    {
+                        // Reduce stock only if everything is valid
+                        part.Stock -= orderPart.Quantity;
+                    }
+                }
+
+                if (hasStockError)
+                {
+                    ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address", order.CustomerId);
+                    ViewData["DeliveryOption"] = new SelectList(new List<string> { "Standard", "Express", "Pickup", "Next-Day" }, order.DeliveryOption);
+                    ViewData["partId"] = new SelectList(_context.Parts, "Id", "Name");
+                    return View(model);
+                }
+
                 _context.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address", order.CustomerId);
-            return View(order);
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address");
+            ViewData["DeliveryOption"] = new SelectList(new List<string> { "Standard", "Express", "Pickup", "Next-Day" });
+            ViewData["partId"] = new SelectList(_context.Parts, "Id", "Name");
+            return View(model);
         }
 
         // GET: Orders/Edit/5
