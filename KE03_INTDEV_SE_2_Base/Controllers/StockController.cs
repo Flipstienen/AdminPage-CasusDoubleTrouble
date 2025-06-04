@@ -47,7 +47,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             var part = await _context.Parts.FindAsync(id);
             if (part == null) return NotFound();
 
-            if (amountToAdd > 0)
+            if (amountToAdd > 0 && (part.Stock + amountToAdd) > 0)
             {
                 part.Stock += amountToAdd;
                 _context.Update(part);

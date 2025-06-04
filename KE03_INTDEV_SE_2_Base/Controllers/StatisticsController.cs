@@ -49,7 +49,10 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             foreach(var item in orderParts)
             {
                 bought += item.Quantity;
-                bought += item.Part.Stock;
+                if(item.Part.Stock >= 0)
+                {
+                    bought += item.Part.Stock;
+                }
             }
             return bought;
         }
@@ -67,7 +70,16 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         }
         private int GetAllLeft()
         {
-            return (GetAllSold() - GetAllBought());
+            int left = 0;
+            var parts = _context.Parts;
+            foreach (var item in parts)
+            {
+                if(item.Stock >= 0)
+                {
+                    left += item.Stock;
+                }
+            }
+            return left;
         }
         public IActionResult Index()
         {
