@@ -13,12 +13,12 @@
                 <div class="card-body">
                     <h3 class="card-title">@Model.Name</h3>
                     <p class="text-muted">@Model.Description</p>
-                    <p><strong>Prijs:</strong> @Model.Price.ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-")</p>
-                    <p><strong>Buy-in prijs:</strong> @Model.BuyInPrice.ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-")</p>
-                    <p><strong>Voorraad:</strong> @Model.Stock stuks</p>
+                    <p><strong>Price:</strong> @Model.Price.ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-")</p>
+                    <p><strong>Buy-in Price:</strong> @Model.BuyInPrice.ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-")</p>
+                    <p><strong>Stock:</strong> @Model.Stock stuks</p>
 
-                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-dark">Bestellen</a>
-                    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Terug</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-outline-dark">Order</a>
+                    <a asp-action="Index" class="btn btn-outline-secondary ms-2">Back</a>
                 </div>
             </div>
         </div>

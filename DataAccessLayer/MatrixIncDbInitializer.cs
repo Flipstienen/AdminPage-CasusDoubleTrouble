@@ -36,7 +36,7 @@ namespace DataAccessLayer
                 .RuleFor(p => p.Name, f => f.Commerce.ProductAdjective() + " " + f.Commerce.Product())
                 .RuleFor(p => p.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(p => p.Price, f => decimal.Parse(f.Commerce.Price(3, 1000, 2))) // Minimum price is 3
-                .RuleFor(p => p.BuyInPrice, (f, p) => Math.Round(p.Price - 2, 2))
+                .RuleFor(p => p.BuyInPrice, (f, p) => Math.Round(p.Price * 0.55m, 2))
                 .RuleFor(p => p.ImageUrl, f => f.Image.PicsumUrl(400, 300))
                 .RuleFor(p => p.Stock, f => f.Random.Int(0, 100));
 

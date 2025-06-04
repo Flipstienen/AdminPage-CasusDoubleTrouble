@@ -1,0 +1,32 @@
+﻿.stats-container {
+    padding: 40px;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25vw, 1fr)); << deze lijn controlt hoeveel er zijn op een rij, 25 is 25 view width; 
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.stat-box {
+    border: 1px solid #333;
+    padding: 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.stat-title {
+    font-weight: bold;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+}
+
+.stat-value {
+    color: #222;
+    font-size: 1.4rem;
+}

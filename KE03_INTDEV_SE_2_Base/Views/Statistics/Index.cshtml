@@ -1,7 +1,38 @@
-﻿
-@{
-    ViewData["Title"] = "Index";
+﻿@{
+    ViewData["Title"] = "Statistics";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
+
+<div class="stats-container">
+    <h2>STATISTICS</h2>
+    <div class="stats-grid">
+        <div class="stat-box">
+            <div class="stat-title">Total Earned</div>
+            <div class="stat-value">@(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-title">Total Lost</div>
+            <div class="stat-value">@(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-title">Total @ViewData["winorloss"]</div>
+            <div class="stat-value">@(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-title">Total Bought</div>
+            <div class="stat-value">@(((int)ViewData["bought"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) stuks</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-title">Total Sold</div>
+            <div class="stat-value">@(((int)ViewData["sold"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) stuks</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-title">Total Left Over</div>
+            <div class="stat-value">@(((int)ViewData["leftover"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) stuks</div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/css/Statistics.css" asp-append-version="true" />
