@@ -58,7 +58,7 @@
             const container = document.getElementById('orderPartsContainer');
             const template = `
                 <div class="order-part border p-2 mb-2 rounded position-relative">
-                    <button type="button" class="btn btn-sm btn-danger remove-btn" style="position: absolute; top: 5px; right: 5px;">✕</button>
+                    <button type="button" class="btn-close remove-btn position-absolute" style="top: 0.5rem; right: 0.5rem;" aria-label="Remove"></button>
                     <div class="form-group">
                         <label>Product</label>
                         <select name="OrderParts[${index}].ProductId" class="form-control">
