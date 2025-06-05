@@ -53,10 +53,11 @@
                         <td>
                             @foreach (var product in item.OrderParts)
                             {
-                                <span>@product.Part.Name</span>
+                                <span class="text-nowrap">@product.Part.Name</span>
 
                                 <br />
                             }
+                            <span>&nbsp; </span>
                         </td>
                         <td>
                             @foreach (var product in item.OrderParts)
@@ -64,10 +65,11 @@
                                 <span>@product.Quantity</span>
                                 <br />
                             }
+                            <span>&nbsp;</span>
                         </td>
                         <td>
                             @foreach(var product in item.OrderParts){
-                            @((product.Quantity * product.Part.Price).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))
+                                <span>@((product.Quantity * product.Part.Price).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</span>
 						        <br />
                             }
                             <span class="text-nowrap">total: @((item.OrderParts.Sum(p => p.Quantity * p.Part.Price)).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</span>
