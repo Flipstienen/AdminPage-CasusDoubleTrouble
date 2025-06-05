@@ -29,8 +29,8 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         private decimal GetAllSpend()
         {
             decimal money = 0;
-            var parts = _context.Parts;
-            foreach(var item in parts)
+            var parts = _context.Parts.AsEnumerable();
+            foreach (var item in parts)
             {
                 money += item.Stock * item.BuyInPrice;
             }
@@ -89,7 +89,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             ViewData["bought"] = GetAllBought();
             ViewData["sold"] = GetAllSold();
             ViewData["leftover"] = GetAllLeft(); 
-            if (GetAllSpend() < 0)
+            if (GetAllGained() >= 0)
             {
                 ViewData["winorloss"] = "Gained";
             }

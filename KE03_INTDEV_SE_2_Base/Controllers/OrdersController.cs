@@ -110,6 +110,12 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                         ModelState.AddModelError("", $"Part with ID {orderPart.PartId} not found.");
                         hasStockError = true;
                     }
+                    else if (order.OrderParts.GroupBy(op => op.PartId).Any(g => g.Count() >= 2))
+                    {
+                        ModelState.AddModelError("", "An order cannot contain two or more of the same item.");
+                        hasStockError = true;
+                    }
+
                     else if (orderPart.Quantity <= 0)
                     {
                         ModelState.AddModelError("", $"Part '{part.Name}' must have a quantity greater than 0.");

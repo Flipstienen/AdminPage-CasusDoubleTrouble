@@ -35,6 +35,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             if (id == null) return NotFound();
 
             var part = await _context.Parts.FindAsync(id);
+
             if (part == null) return NotFound();
 
             return View(part);

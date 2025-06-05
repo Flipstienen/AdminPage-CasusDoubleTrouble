@@ -54,10 +54,25 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ImageUrl")] Part part)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Price,ImageUrl,BuyInPrice")] Part part)
         {
+            ModelState.Clear();
+            if(part.Price > 100000 || part.Price <= 0)
+            {
+                ModelState.AddModelError("Price", "The price must be between 1 and 100.000.");
+                return View(part);
+            }
+            foreach(var item in _context.Parts)
+            {
+                if(part.Name.ToLower() == item.Name.ToLower())
+                {
+                    ModelState.AddModelError("Name", "A part with this name already exists.");
+                    return View(part);
+                }
+            }
             if (ModelState.IsValid)
             {
+                part.BuyInPrice = Math.Round((part.Price * 0.55m), 2);
                 _context.Add(part);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -86,11 +101,33 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,ImageUrl")] Part part)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Price,ImageUrl,Stock,BuyInPrice")] Part part)
         {
-            if (id != part.Id)
+            ModelState.Clear();
+            if(id != part.Id)
             {
                 return NotFound();
+            }
+            part.Price = Math.Round(part.Price, 2);
+            if (part.Price > 100000 || part.Price <= 0)
+            {
+                ModelState.AddModelError("Price", "The price must be between 1 and 100.000.");
+                return View(part);
+            }
+
+            foreach (var item in _context.Parts.AsNoTracking())
+            {
+                if (item.Id == part.Id)
+                {
+                    part.BuyInPrice = item.BuyInPrice;
+                    part.Stock = item.Stock;
+                }
+
+                if (item.Id != part.Id && part.Name.ToLower() == item.Name.ToLower())
+                {
+                    ModelState.AddModelError("Name", "A part with this name already exists.");
+                    return View(part);
+                }
             }
 
             if (ModelState.IsValid)

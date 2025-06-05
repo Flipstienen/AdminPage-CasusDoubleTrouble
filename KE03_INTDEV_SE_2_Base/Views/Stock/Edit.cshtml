@@ -40,7 +40,7 @@
         const totalPriceDisplay = document.getElementById("totalPriceDisplay");
         const submitBtn = document.getElementById("submitBtn");
 
-        const buyInPrice = parseFloat(form.dataset.buyinprice.replace(',', '.'));
+        const buyInPrice = parseFloat(@Model.BuyInPrice);
         const formatter = new Intl.NumberFormat('nl-NL', {
             style: 'currency',
             currency: 'EUR'
@@ -48,7 +48,9 @@
 
         function updateTotalPrice() {
             const amount = parseInt(amountInput.value) || 0;
+            
             const total = amount * buyInPrice;
+            console.log(amount, buyInPrice, total);
             totalPriceDisplay.value = formatter.format(total);
         }
 
@@ -58,7 +60,7 @@
         form.addEventListener("submit", function (e) {
             const amount = parseInt(amountInput.value) || 0;
             if (amount > 50) {
-                const confirmed = confirm(`You're about to order ${amount} of this product.\nAre you certain you're not accidently a cat walking over the keyboard?`);
+                const confirmed = confirm(`You're about to order ${amount} of this product.\nAre you certain you're not accidentally a cat walking over the keyboard?`);
                 if (!confirmed) {
                     e.preventDefault();
                 }
