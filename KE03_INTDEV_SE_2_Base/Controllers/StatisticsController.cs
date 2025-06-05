@@ -70,16 +70,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
         }
         private int GetAllLeft()
         {
-            int left = 0;
-            var parts = _context.Parts;
-            foreach (var item in parts)
-            {
-                if(item.Stock >= 0)
-                {
-                    left += item.Stock;
-                }
-            }
-            return left;
+            return (GetAllBought()-GetAllSold());
         }
         public IActionResult Index()
         {
