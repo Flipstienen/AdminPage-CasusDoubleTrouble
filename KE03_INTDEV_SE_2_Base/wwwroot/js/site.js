@@ -17,7 +17,7 @@
 
         for (let img of navImages) {
             img.classList.add("me-2");
-            img.style.width = "20px";
+            img.style.width = "24px";
         }
 
         sidebar.querySelectorAll('a.quickselectsidebar.nav-link').forEach(link => {
