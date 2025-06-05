@@ -1,0 +1,36 @@
+afe32663c3e4112285462a83065d74c9627b2806,Flipstienen,flipstienen1@gmail.com,2025-06-05,delete return color
+22497ffa3f84a8b853c90e732408e90881d70ce8,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-05,Small Fixes
+efb1c9341f2602ede0ef93b2e5ea7303c1abe1ce,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-05,Edits to Buttons
+95d94500c459cdb5e9cdc9a235857aa693c92ade,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-05,Updated Buttons to better reflect the application
+dc1997219dbdfbc358063315ccb14dcd934d0974,Flipstienen,flipstienen1@gmail.com,2025-06-05,order index fix
+96997011846d7e4e0a80845478948606827d1de6,Flipstienen,flipstienen1@gmail.com,2025-06-05,bug fix
+f7588deb844ae3bd25d3f79c21b14c5a158e10dc,Flip Stienen,flipstienen1@gmail.com,2025-06-04,Merge pull request #3 from Flipstienen/Changes-Review-Flip-6/4
+7459162267af18599ac284b035c989310b83eab1,Flipstienen,flipstienen1@gmail.com,2025-06-04,little upgrade
+7eb54ba6a68c112b0db9c9694a18460a5764d240,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-04,Changes to order pages and a product page
+0908db2c038b3ac2e08914b1131299cd4d52353b,Flipstienen,flipstienen1@gmail.com,2025-06-04,Create Order done
+8a0a1894578fddc0bb9ce810effe3028dbd2498c,Flipstienen,flipstienen1@gmail.com,2025-06-04,fix for stock and statistics
+0dcdad53dfc937c46307b23cbade44f5ea436a35,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-04,Edits to Stock page
+dd04de38e4833a0e666e4c961d310d3389cb7c3d,Flipstienen,flipstienen1@gmail.com,2025-06-04,Statistics page done
+219033325c0353fd769c96a7ef64d4b2fd30b8b1,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-03,Finished Stock Page
+f833fc51445af342e111deec8cf3b3926a9e2419,Flipstienen,flipstienen1@gmail.com,2025-06-03,added statistics controller
+7e1bdaaa799b02f3300af1cca91194218a5acbc9,Flipstienen,flipstienen1@gmail.com,2025-06-03,OrderPage update and product page change
+5eb737e7f242ab67d09bfeceea1f98470f7f774a,Flip Stienen,flipstienen1@gmail.com,2025-06-03,Merge pull request #2 from Flipstienen/Stock-Page
+c603877f9575077e6852a3cc1d570d89de0c4d1f,Kevin Huijten,1844067huijten@zuyd.nl,2025-06-02,Changed Product index, edit, and details.
+02694f52dc2a61e7349311d06cb587d8b960dc1e,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-06-02,Creation Stock page
+c034c19002f0686447c53847cc9e5a625f672a2a,Flipstienen,flipstienen1@gmail.com,2025-06-01,Order page fix
+c2bbd0aef4eca7903e30f5370124c94511257346,ThatDevFoxy,ThatDevFoxy@gmail.com,2025-05-30,Slight edits to the Navbar
+e9a48e4b5ce04e3bfaa493c14036c0bfbf8f5a99,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-30,Added quantity to OrderParts, rewrote DbContext and Initiliazer and changed controller a little.
+649c650bb52dc11d565ae642d3027d96fc9d5579,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-30,Added stock and Buy In Price
+f9f07c78faaf945ca65e02bef0140fc12deff9ea,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-30,Changed styling on sidebar.
+046132530ce18966b351eeb0b9fad90a8b8d85f4,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-30,Changed database to include Delivery Type and Completed.
+b5e2f327f12c2608ca5e939194f0fba03b6ebf89,Flipstienen,flipstienen1@gmail.com,2025-05-29,Orders and layout pre-done
+cb878c730ca785737f0bd3f791b669c2c9fc0152,Flipstienen,flipstienen1@gmail.com,2025-05-29,product page and sidebar.
+0ba93b3e704b89c2385b4df45aa26e0d29faafec,Flipstienen,flipstienen1@gmail.com,2025-05-28,Merge pull request #1 from Flipstienen/graph-changes
+d3b2fb34b204cb3a33f9d2cd369211995d27ee08,Flipstienen,flipstienen1@gmail.com,2025-05-28,graph changes
+07b3aac1b83d10d05c208d8319dd3c78f3b93025,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-28,Deleted footer, added chart at homescreen, added a bit more data to seeding to visualize the graph better.
+eb683d15b1285fef61d0d704f6687c11952f34dd,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-28,Deleted Product class, interface and repository. Added extra properties to Part and Customer. Seeded 10 Users, 50 Orders and 50 Parts through the Faker library.
+8406a0e77059f171f48318d8424fac4f4b997019,Kevin Huijten,1844067huijten@zuyd.nl,2025-05-28,Test Commit
+c2bb8d6d879fdcd3f89e691f67581e2711f89c16,Flipstienen,flipstienen1@gmail.com,2025-05-27,Update README.md
+e4c42f45b43934f6d3250e2f1abd7364d2adc6d3,jaspersnhj,nicky.jaspers@hszuyd.nl,2025-04-24,Je realiseert samen met je casus groep een webapplicatie, een “admin-achtige” webapplicatie waarbij je gebruik maakt van ASP.NET Core MVC architecture pattern. De belangrijkste hoofdprestatie en functionele eisen van deze applicatie zijn als volgt: Het back-office team van Matrix Inc. kan de producten en bijbehorende data en details beheren in deze webapplicatie, zodat de interne en externe klanten altijd over de juiste informatie beschikken.
+357c6cc056560743f74e6cafa14cdb0292bb460f,jaspersnhj,nicky.jaspers@hszuyd.nl,2025-04-24,Dit project kun je gebruiken als startpunt voor de groeps inleveropdracht: KE03_INTDEV_SE_2 Je realiseert samen met je casus groep een webapplicatie, een “admin-achtige” webapplicatie waarbij je gebruik maakt van ASP.NET Core MVC architecture pattern. De belangrijkste hoofdprestatie en functionele eisen van deze applicatie zijn als volgt: Het back-office team van Matrix Inc. kan de producten en bijbehorende data en details beheren in deze webapplicatie, zodat de interne en externe klanten altijd over de juiste informatie beschikken.
+48600a1236bcb8448d0398e1527f988983ea6a13,Nicky Jaspers,nicky_jaspers@hotmail.com,2025-04-24,Initial commit
