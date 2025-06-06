@@ -10,37 +10,37 @@
         <div class="stat-box">
             <div class="stat-title">Total Revenue</div>
             <div class="stat-value">
-                @(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("en-US")).Replace(".00", ".-"))
+                @(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Total Cost (Inventory Investment)</div>
             <div class="stat-value">
-                @(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("en-US")).Replace(".00", ".-"))
+                @(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Projected Net @ViewData["winorloss"]</div>
             <div class="stat-value">
-                @(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("en-US")).Replace(".00", ".-"))
+                @(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Total Purchased</div>
             <div class="stat-value">
-                @(((int)ViewData["bought"]).ToString("N0", new System.Globalization.CultureInfo("en-US"))) units
+                @(((int)ViewData["bought"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) units
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Total Sold</div>
             <div class="stat-value">
-                @(((int)ViewData["sold"]).ToString("N0", new System.Globalization.CultureInfo("en-US"))) units
+                @(((int)ViewData["sold"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) units
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Inventory Remaining</div>
             <div class="stat-value">
-                @(((int)ViewData["leftover"]).ToString("N0", new System.Globalization.CultureInfo("en-US"))) units
+                @(((int)ViewData["leftover"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) units
             </div>
         </div>
     </div>
