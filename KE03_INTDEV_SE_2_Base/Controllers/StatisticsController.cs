@@ -82,12 +82,12 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             ViewData["leftover"] = GetAllLeft(); 
             if (GetAllGained() >= 0)
             {
-                ViewData["winorloss"] = "Gained";
+                ViewData["winorloss"] = "Gain";
             }
 
             else
             {
-                ViewData["winorloss"] = "Losses";
+                ViewData["winorloss"] = "Loss";
             }
             return View();
         }

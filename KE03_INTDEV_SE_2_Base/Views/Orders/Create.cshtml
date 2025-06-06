@@ -1,7 +1,7 @@
 ﻿@model OrderCreateViewModel
 
 <h1>Create</h1>
-<h4>Order</h4>
+<h4>Request Replacement Order</h4>
 <hr />
 <div class="row">
     <div class="col-md-6">
@@ -9,8 +9,10 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
-                <label asp-for="CustomerId" class="control-label"></label>
-                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId"></select>
+                <label class="control-label">UserName</label>
+                <select asp-for="CustomerId" class="form-control" asp-items="ViewBag.CustomerId">
+                    <option value="">-- Select Customer --</option>
+                </select>
             </div>
 
             <hr />
@@ -23,16 +25,10 @@
                         <div class="form-group">
                             <label>Product</label>
                             <select name="OrderParts[@i].ProductId" class="form-control">
-                                @foreach (SelectListItem item in ViewBag.partId)
+                                <option value="">-- Select Product --</option>
+                                @foreach (SelectListItem item in (IEnumerable<SelectListItem>)ViewBag.partId)
                                 {
-                                    if (item.Value == Model.OrderParts[i].ProductId.ToString())
-                                    {
-                                        <option value="@item.Value" selected="selected">@item.Text</option>
-                                    }
-                                    else
-                                    {
-                                        <option value="@item.Value">@item.Text</option>
-                                    }
+                                    <option value="@item.Value" selected="@(item.Value == Model.OrderParts[i].ProductId.ToString())">@item.Text</option>
                                 }
                             </select>
                         </div>
@@ -48,7 +44,9 @@
 
             <div class="form-group mt-3">
                 <label asp-for="DeliveryOption" class="control-label"></label>
-                <select asp-for="DeliveryOption" class="form-control" asp-items="ViewBag.DeliveryOption"></select>
+                <select asp-for="DeliveryOption" class="form-control" asp-items="ViewBag.DeliveryOption">
+                    <option value="">-- Select Delivery Option --</option>
+                </select>
             </div>
 
             <br />
@@ -61,8 +59,9 @@
 </div>
 
 @{
-    var partOptionsHtml = string.Join("", ((IEnumerable<SelectListItem>)ViewBag.partId)
-        .Select(p => $"<option value='{p.Value}'>{p.Text}</option>"));
+    var partOptionsHtml = "<option value=''>-- Select Product --</option>" +
+        string.Join("", ((IEnumerable<SelectListItem>)ViewBag.partId)
+        .Select(p => $"<option value=\"{p.Value}\">{p.Text}</option>"));
 }
 @section Scripts {
     <script>
