@@ -30,7 +30,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                 case "medium":
                     parts = parts
                         .Where(p => p.Stock > 0 && p.Stock < 10)
-                        .OrderByDescending(p => p.Stock);
+                        .OrderBy(p => p.Stock);
                     break;
                 case "none":
                     parts = parts.Where(p => p.Stock == 0);
