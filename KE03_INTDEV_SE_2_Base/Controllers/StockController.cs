@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using DataAccessLayer.Models;
+using System.Linq;
 
 namespace KE03_INTDEV_SE_2_Base.Controllers
 {
@@ -14,10 +15,32 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             _context = context;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            var parts = await _context.Parts.ToListAsync();
-            return View(parts);
+            var parts = _context.Parts.AsQueryable();
+
+            switch (sortOrder)
+            {
+                case "low-high":
+                    parts = parts.OrderBy(p => p.Stock);
+                    break;
+                case "high-low":
+                    parts = parts.OrderByDescending(p => p.Stock);
+                    break;
+                case "medium":
+                    parts = parts
+                        .Where(p => p.Stock > 0 && p.Stock < 10)
+                        .OrderByDescending(p => p.Stock);
+                    break;
+                case "none":
+                    parts = parts.Where(p => p.Stock == 0);
+                    break;
+                default:
+                    parts = parts.OrderBy(p => p.Name);
+                    break;
+            }
+
+            return View(await parts.ToListAsync());
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -35,7 +58,6 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             if (id == null) return NotFound();
 
             var part = await _context.Parts.FindAsync(id);
-
             if (part == null) return NotFound();
 
             return View(part);

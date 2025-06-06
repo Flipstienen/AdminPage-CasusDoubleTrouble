@@ -1,36 +1,55 @@
 ﻿@model IEnumerable<DataAccessLayer.Models.Part>
 @{
     ViewData["Title"] = "Stock";
+    var currentSort = Context.Request.Query["sortOrder"];
 }
 
 <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <style>
-    :root {
-        --matrix-dark: #1D281D;
-        --matrix-light: #FFF4F2;
-        --matrix-red: #DD3E3E;
-        --matrix-gray-dark: #2C2C2C;
-        --matrix-gray-light: #F4F4F4;
-        --matrix-pink: #D99E9E;
-    }
+        :root {
+            --matrix-dark: #1D281D;
+            --matrix-light: #FFF4F2;
+            --matrix-red: #DD3E3E;
+            --matrix-gray-dark: #2C2C2C;
+            --matrix-gray-light: #F4F4F4;
+            --matrix-pink: #D99E9E;
+        }
 
-    body {
-        background-color: var(--matrix-light);
-        color: var(--matrix-gray-dark);
-    }
+        body {
+            background-color: var(--matrix-light);
+            color: var(--matrix-gray-dark);
+        }
 
-    .card {
-        transition: transform 0.2s ease;
-    }
-    .card:hover {
-        transform: scale(1.02);
-    }
+        .card {
+            transition: transform 0.2s ease;
+        }
+
+            .card:hover {
+                transform: scale(1.02);
+            }
     </style>
 </head>
 <body>
     <div class="container-fluid px-4 mt-4">
-        <h2 class="mb-4">Stockmanagement</h2> @* hier kan evt nog een icon als je dat wilt, ik heb hem voor nu ff weggehaalt *@
+        <h2 class="mb-4">Stockmanagement</h2>
+
+        <form method="get" asp-action="Index" class="mb-3">
+            <div class="row g-2 align-items-center">
+                <div class="col-auto">
+                    <label for="sortOrder" class="col-form-label">Sort Stock:</label>
+                </div>
+                <div class="col-auto">
+                    <select class="form-select" id="sortOrder" name="sortOrder" onchange="this.form.submit()">
+                        <option value="">-- Sort Option --</option>
+                        <option value="low-high" selected="@(currentSort == "low-high")">Low to High</option>
+                        <option value="high-low" selected="@(currentSort == "high-low")">High to Low</option>
+                        <option value="medium" selected="@(currentSort == "medium")">Medium Stock</option>
+                        <option value="none" selected="@(currentSort == "none")">No Stock</option>
+                    </select>
+                </div>
+            </div>
+        </form>
 
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             @foreach (var part in Model)
@@ -47,13 +66,13 @@
                             </p>
                             <p class="mb-0">
                                 <strong>Stock:</strong>
-                                <span class="badge @((part.Stock == 0) ? "bg-danger" : (part.Stock < 10) ? "bg-warning text-dark" : "bg-success")"> @* met de margins van de kleur verandering kan nog worden gespeeld *@
+                                <span class="badge @((part.Stock == 0) ? "bg-danger" : (part.Stock < 10) ? "bg-warning text-dark" : "bg-success")">
                                     @part.Stock stuks
                                 </span>
                             </p>
                         </div>
                         <div class="card-footer bg-transparent border-0 d-flex justify-content-between">
-                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@part.Id"><i class="bi bi-pencil-square" style="width: 10px; height: 10px;"></i> Order</a>
+                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@part.Id"><i class="bi bi-pencil-square"></i> Order</a>
                             <a class="btn btn-info text-white" asp-action="Details" asp-route-id="@part.Id"><i class="bi bi-info-circle"></i> Details</a>
                         </div>
                     </div>
