@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using DataAccessLayer;
 using DataAccessLayer.Models;
 using KE03_INTDEV_SE_2_Base.Models;
-using SQLitePCL;
 
 namespace KE03_INTDEV_SE_2_Base.Controllers
 {
@@ -28,15 +27,17 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                 .Include(o => o.Customer)
                 .Include(o => o.OrderParts)
                 .ThenInclude(op => op.Part);
+
             if (id == 1)
             {
                 var matrixIncDbContextOrder = _context.Orders
-                .Include(o => o.Customer)
-                .Include(o => o.OrderParts)
-                .ThenInclude(op => op.Part).OrderByDescending(o => o.OrderDate); // <-- Include actual part data
+                    .Include(o => o.Customer)
+                    .Include(o => o.OrderParts)
+                    .ThenInclude(op => op.Part)
+                    .OrderByDescending(o => o.OrderDate);
+
                 return View(await matrixIncDbContextOrder.ToListAsync());
             }
-            
 
             return View(await matrixIncDbContext.ToListAsync());
         }
@@ -69,19 +70,19 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             var model = new OrderCreateViewModel
             {
                 OrderParts = new List<OrderPartViewModel>
-        {
-            new OrderPartViewModel() // Initialize with one entry
-        }
+                {
+                    new OrderPartViewModel()
+                }
             };
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address");
+
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
             ViewData["DeliveryOption"] = new SelectList(new List<string> { "Standard", "Express", "Pickup", "Next-Day" });
             ViewData["partId"] = new SelectList(_context.Parts, "Id", "Name");
+
             return View(model);
         }
 
         // POST: Orders/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(OrderCreateViewModel model)
@@ -90,6 +91,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             {
                 bool hasStockError = false;
                 ModelState.Clear();
+
                 var order = new Order
                 {
                     OrderDate = DateTime.Now,
@@ -102,6 +104,7 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                         Quantity = op.Quantity
                     }).ToList()
                 };
+
                 foreach (var orderPart in order.OrderParts)
                 {
                     var part = await _context.Parts.FindAsync(orderPart.PartId);
@@ -115,7 +118,6 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                         ModelState.AddModelError("", "An order cannot contain two or more of the same item.");
                         hasStockError = true;
                     }
-
                     else if (orderPart.Quantity <= 0)
                     {
                         ModelState.AddModelError("", $"Part '{part.Name}' must have a quantity greater than 0.");
@@ -128,14 +130,13 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                     }
                     else
                     {
-                        // Reduce stock only if everything is valid
                         part.Stock -= orderPart.Quantity;
                     }
                 }
 
                 if (hasStockError)
                 {
-                    ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address", order.CustomerId);
+                    ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", order.CustomerId);
                     ViewData["DeliveryOption"] = new SelectList(new List<string> { "Standard", "Express", "Pickup", "Next-Day" }, order.DeliveryOption);
                     ViewData["partId"] = new SelectList(_context.Parts, "Id", "Name");
                     return View(model);
@@ -145,9 +146,11 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address");
+
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name");
             ViewData["DeliveryOption"] = new SelectList(new List<string> { "Standard", "Express", "Pickup", "Next-Day" });
             ViewData["partId"] = new SelectList(_context.Parts, "Id", "Name");
+
             return View(model);
         }
 
@@ -164,13 +167,12 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             {
                 return NotFound();
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address", order.CustomerId);
+
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", order.CustomerId);
             return View(order);
         }
 
         // POST: Orders/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,OrderDate,CustomerId")] Order order)
@@ -198,11 +200,12 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
                         throw;
                     }
                 }
+
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Address", order.CustomerId);
-            return View(order);
 
+            ViewData["CustomerId"] = new SelectList(_context.Customers, "Id", "Name", order.CustomerId);
+            return View(order);
         }
 
         private bool OrderExists(int id)

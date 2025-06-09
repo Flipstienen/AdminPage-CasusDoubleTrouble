@@ -4,33 +4,44 @@
 
 <h1>@ViewData["Title"]</h1>
 
-
 <div class="stats-container">
-    <h2>STATISTICS</h2>
+    <h2>FINANCIAL STATISTICS</h2>
     <div class="stats-grid">
         <div class="stat-box">
-            <div class="stat-title">Total Earned</div>
-            <div class="stat-value">@(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</div>
+            <div class="stat-title">Total Revenue</div>
+            <div class="stat-value">
+                @(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
+            </div>
         </div>
         <div class="stat-box">
-            <div class="stat-title">Total Lost</div>
-            <div class="stat-value">@(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</div>
+            <div class="stat-title">Total Cost (Inventory Investment)</div>
+            <div class="stat-value">
+                @(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
+            </div>
         </div>
         <div class="stat-box">
-            <div class="stat-title">Total @ViewData["winorloss"]</div>
-            <div class="stat-value">@(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))</div>
+            <div class="stat-title">Projected Net @ViewData["winorloss"]</div>
+            <div class="stat-value">
+                @(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
+            </div>
         </div>
         <div class="stat-box">
-            <div class="stat-title">Total Bought</div>
-            <div class="stat-value">@(((int)ViewData["bought"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) stuks</div>
+            <div class="stat-title">Total Purchased</div>
+            <div class="stat-value">
+                @(((int)ViewData["bought"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) units
+            </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Total Sold</div>
-            <div class="stat-value">@(((int)ViewData["sold"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) stuks</div>
+            <div class="stat-value">
+                @(((int)ViewData["sold"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) units
+            </div>
         </div>
         <div class="stat-box">
-            <div class="stat-title">Total Left Over</div>
-            <div class="stat-value">@(((int)ViewData["leftover"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) stuks</div>
+            <div class="stat-title">Inventory Remaining</div>
+            <div class="stat-value">
+                @(((int)ViewData["leftover"]).ToString("N0", new System.Globalization.CultureInfo("nl-NL"))) units
+            </div>
         </div>
     </div>
 </div>

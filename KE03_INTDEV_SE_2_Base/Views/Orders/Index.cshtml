@@ -48,7 +48,7 @@
                             @Html.DisplayFor(modelItem => item.OrderDate)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Customer.Address)
+                            @Html.DisplayFor(modelItem => item.Customer.Name)
                         </td>
                         <td>
                             @foreach (var product in item.OrderParts)
@@ -57,7 +57,7 @@
 
                                 <br />
                             }
-                            <span>&nbsp; </span>
+                            <span>&nbsp;</span>
                         </td>
                         <td>
                             @foreach (var product in item.OrderParts)
