@@ -26,18 +26,8 @@ namespace KE03_INTDEV_SE_2_Base.Controllers
             var matrixIncDbContext = _context.Orders
                 .Include(o => o.Customer)
                 .Include(o => o.OrderParts)
-                .ThenInclude(op => op.Part);
-
-            if (id == 1)
-            {
-                var matrixIncDbContextOrder = _context.Orders
-                    .Include(o => o.Customer)
-                    .Include(o => o.OrderParts)
-                    .ThenInclude(op => op.Part)
-                    .OrderByDescending(o => o.OrderDate);
-
-                return View(await matrixIncDbContextOrder.ToListAsync());
-            }
+                .ThenInclude(op => op.Part)
+                .OrderByDescending(o => o.OrderDate);
 
             return View(await matrixIncDbContext.ToListAsync());
         }
