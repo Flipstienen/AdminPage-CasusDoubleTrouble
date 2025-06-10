@@ -10,19 +10,19 @@
         <div class="stat-box">
             <div class="stat-title">Total Revenue</div>
             <div class="stat-value">
-                @(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
+                @(((decimal)ViewData["income"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Total Cost (Inventory Investment)</div>
             <div class="stat-value">
-                @(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
+                @(((decimal)ViewData["spent"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))
             </div>
         </div>
         <div class="stat-box">
             <div class="stat-title">Projected Net @ViewData["winorloss"]</div>
             <div class="stat-value">
-                @(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(".00", ".-"))
+                @(((decimal)ViewData["gained"]).ToString("C", new System.Globalization.CultureInfo("nl-NL")).Replace(",00", ",-"))
             </div>
         </div>
         <div class="stat-box">
